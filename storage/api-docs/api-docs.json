@@ -1,0 +1,3513 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Waiting List API",
+        "description": "API documentation for the Waiting List SaaS application",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/admin/restaurant-owners": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "List restaurant owners",
+                "description": "Get a paginated list of restaurant owners (users who have added restaurant users) for admin users",
+                "operationId": "1b79ec5203e886b0652929f7eb4f4e2f",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search by owner name or email",
+                        "schema": {
+                            "type": "string",
+                            "example": "john"
+                        }
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "description": "Field to sort by",
+                        "schema": {
+                            "type": "string",
+                            "example": "restaurant_users_count"
+                        }
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "Sort order (asc or desc)",
+                        "schema": {
+                            "type": "string",
+                            "example": "desc"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "schema": {
+                            "type": "integer",
+                            "example": 20
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Restaurant owners retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "meta": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Restaurant owners retrieved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized. Admin access required."
+                    },
+                    "500": {
+                        "description": "Failed to retrieve restaurant owners"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/restaurant-owners/{ownerId}/users": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "List restaurant users by owner",
+                "description": "Get a paginated list of restaurant users for a specific owner for admin users",
+                "operationId": "ebc8224232458801069e03abc1cad78a",
+                "parameters": [
+                    {
+                        "name": "ownerId",
+                        "in": "path",
+                        "description": "ID of the owner",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search by username or mobile number",
+                        "schema": {
+                            "type": "string",
+                            "example": "john"
+                        }
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "description": "Field to sort by",
+                        "schema": {
+                            "type": "string",
+                            "example": "created_at"
+                        }
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "Sort order (asc or desc)",
+                        "schema": {
+                            "type": "string",
+                            "example": "desc"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "schema": {
+                            "type": "integer",
+                            "example": 20
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Restaurant users retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "owner": {
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Restaurant users retrieved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized. Admin access required."
+                    },
+                    "500": {
+                        "description": "Failed to retrieve restaurant users"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/dashboard-stats": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Get admin dashboard statistics",
+                "description": "Get dashboard statistics for admin users",
+                "operationId": "c5e50101291795eec0b8f5a61cebc6a1",
+                "responses": {
+                    "200": {
+                        "description": "Dashboard statistics retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "total_restaurant_owners": {
+                                                    "type": "integer",
+                                                    "example": 42
+                                                },
+                                                "total_restaurant_users": {
+                                                    "type": "integer",
+                                                    "example": 1250
+                                                },
+                                                "total_users": {
+                                                    "type": "integer",
+                                                    "example": 2100
+                                                },
+                                                "recent_registrations": {
+                                                    "type": "integer",
+                                                    "example": 15
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Dashboard statistics retrieved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized. Admin access required."
+                    },
+                    "500": {
+                        "description": "Failed to retrieve dashboard statistics"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/google": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Authenticate user with Google OAuth",
+                "description": "Handles Google OAuth authentication and creates/returns user with Sanctum token",
+                "operationId": "0ccb7fc0ed2783b46bad761c1ace8b05",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "access_token": {
+                                        "description": "Google OAuth access token",
+                                        "type": "string",
+                                        "example": "ya29.a0AfH6SMC..."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful authentication",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "John Doe"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "john@example.com"
+                                                        },
+                                                        "profile_picture": {
+                                                            "type": "string",
+                                                            "example": "https://..."
+                                                        },
+                                                        "has_pin": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        },
+                                                        "is_admin": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "1|abc123..."
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Authentication successful"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authentication failed"
+                    }
+                }
+            }
+        },
+        "/api/auth/user": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Get authenticated user details",
+                "description": "Returns details of the currently authenticated user",
+                "operationId": "32d03117b496ae02c2543b61438d24ad",
+                "responses": {
+                    "200": {
+                        "description": "User details retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "John Doe"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "john@example.com"
+                                                },
+                                                "profile_picture": {
+                                                    "type": "string",
+                                                    "example": "https://..."
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2023-01-01T00:00:00.000000Z"
+                                                },
+                                                "has_pin": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "is_admin": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User details retrieved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Logout user",
+                "description": "Revokes the current user's authentication token",
+                "operationId": "6abf3b64a4bc7838d56346f05a5153af",
+                "responses": {
+                    "200": {
+                        "description": "Logged out successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Logged out successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Logout failed"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/admin-login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Admin login",
+                "description": "Authenticate admin user with email and password",
+                "operationId": "19f550147e2ca4af6ef0add9071c1302",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "admin@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Admin authentication successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Admin User"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "admin@example.com"
+                                                        },
+                                                        "profile_picture": {
+                                                            "type": "string",
+                                                            "example": "https://..."
+                                                        },
+                                                        "has_pin": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        },
+                                                        "is_admin": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "1|abc123..."
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Admin authentication successful"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed"
+                    },
+                    "401": {
+                        "description": "Authentication failed"
+                    }
+                }
+            }
+        },
+        "/api/auth/set-pin": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Set user PIN",
+                "description": "Set a PIN for the authenticated user after first Google OAuth login",
+                "operationId": "b7ba24a97bb77bc9474c8a83eeb73f01",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "pin"
+                                ],
+                                "properties": {
+                                    "pin": {
+                                        "type": "string",
+                                        "maxLength": 6,
+                                        "minLength": 4,
+                                        "pattern": "^[0-9]{4,6}$",
+                                        "example": "1234"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "PIN set successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "PIN set successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "John Doe"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "john@example.com"
+                                                        },
+                                                        "profile_picture": {
+                                                            "type": "string",
+                                                            "example": "https://..."
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2023-01-01T00:00:00.000000Z"
+                                                        },
+                                                        "has_pin": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        },
+                                                        "is_admin": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed"
+                    },
+                    "500": {
+                        "description": "Failed to set PIN"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/pin-login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login with PIN",
+                "description": "Authenticate user with email and PIN",
+                "operationId": "0873842538c97aa66cd16841ec9ec612",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "pin"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com"
+                                    },
+                                    "pin": {
+                                        "type": "string",
+                                        "maxLength": 6,
+                                        "minLength": 4,
+                                        "pattern": "^[0-9]{4,6}$",
+                                        "example": "1234"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "PIN authentication successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "John Doe"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "john@example.com"
+                                                        },
+                                                        "profile_picture": {
+                                                            "type": "string",
+                                                            "example": "https://..."
+                                                        },
+                                                        "has_pin": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        },
+                                                        "is_admin": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "1|abc123..."
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "PIN authentication successful"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed"
+                    },
+                    "401": {
+                        "description": "Authentication failed"
+                    }
+                }
+            }
+        },
+        "/api/auth/profile": {
+            "put": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Update user profile",
+                "description": "Update the authenticated user's profile information",
+                "operationId": "1b6f918eb3f3cd3b4d27be8eb1979861",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "John Doe Updated"
+                                    },
+                                    "profile_picture": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "example": "https://example.com/image.jpg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Profile updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "John Doe Updated"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "john@example.com"
+                                                        },
+                                                        "profile_picture": {
+                                                            "type": "string",
+                                                            "example": "https://example.com/image.jpg"
+                                                        },
+                                                        "has_pin": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        },
+                                                        "is_admin": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Profile updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to update profile"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/restaurants": {
+            "get": {
+                "tags": [
+                    "Restaurants"
+                ],
+                "summary": "List all restaurants (Admin only)",
+                "description": "Get a paginated list of all restaurants for admin users",
+                "operationId": "a1de821242758b5c0a22507486bf3b0a",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search by restaurant name",
+                        "schema": {
+                            "type": "string",
+                            "example": "Pizza Palace"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filter by status (active, inactive)",
+                        "schema": {
+                            "type": "string",
+                            "example": "active"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Restaurants retrieved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized. Admin access required."
+                    },
+                    "500": {
+                        "description": "Failed to retrieve restaurants"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Restaurants"
+                ],
+                "summary": "Create a new restaurant (Admin only)",
+                "description": "Create a new restaurant entry for admin users",
+                "operationId": "167b9a29f6e62b0025f90b9a1d10b44b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Pizza Palace"
+                                    },
+                                    "contact_number": {
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "location": {
+                                        "type": "string",
+                                        "example": "Downtown"
+                                    },
+                                    "address_line_1": {
+                                        "type": "string",
+                                        "example": "123 Main St"
+                                    },
+                                    "address_line_2": {
+                                        "type": "string",
+                                        "example": "Suite 100"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "New York"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "example": "NY"
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "example": "USA"
+                                    },
+                                    "postal_code": {
+                                        "type": "string",
+                                        "example": "10001"
+                                    },
+                                    "latitude": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 40.7128
+                                    },
+                                    "longitude": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": -74.006
+                                    },
+                                    "owner_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "owner_name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Best pizza in town"
+                                    },
+                                    "profile": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "is_active": {
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Restaurant created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Restaurant created successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized. Admin access required."
+                    },
+                    "422": {
+                        "description": "Validation failed"
+                    },
+                    "500": {
+                        "description": "Failed to create restaurant"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/restaurants/public": {
+            "get": {
+                "tags": [
+                    "Restaurants"
+                ],
+                "summary": "List public restaurants",
+                "description": "Get a paginated list of public restaurants (no authentication required)",
+                "operationId": "562a8a82f6edb555866beeccba19d49f",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search by restaurant name",
+                        "schema": {
+                            "type": "string",
+                            "example": "Pizza Palace"
+                        }
+                    },
+                    {
+                        "name": "latitude",
+                        "in": "query",
+                        "description": "User's latitude for location-based search",
+                        "schema": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 12.9716
+                        }
+                    },
+                    {
+                        "name": "longitude",
+                        "in": "query",
+                        "description": "User's longitude for location-based search",
+                        "schema": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 77.5946
+                        }
+                    },
+                    {
+                        "name": "radius",
+                        "in": "query",
+                        "description": "Search radius in kilometers (default: 10)",
+                        "schema": {
+                            "type": "integer",
+                            "example": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Public restaurants retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Public restaurants retrieved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to retrieve restaurants"
+                    }
+                }
+            }
+        },
+        "/api/admin/restaurants/{id}": {
+            "get": {
+                "tags": [
+                    "Restaurants"
+                ],
+                "summary": "Get a specific restaurant (Admin only)",
+                "description": "Retrieve details of a specific restaurant by ID for admin users",
+                "operationId": "097c60318c6e2d6da7525dfd0ef78ff1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the restaurant",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Restaurant retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Restaurant retrieved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized. Admin access required."
+                    },
+                    "404": {
+                        "description": "Restaurant not found"
+                    },
+                    "500": {
+                        "description": "Failed to retrieve restaurant"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Restaurants"
+                ],
+                "summary": "Update a restaurant (Admin only)",
+                "description": "Update an existing restaurant entry for admin users",
+                "operationId": "a82cb9a1184e97e423d6e0580652249c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the restaurant",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Pizza Palace"
+                                    },
+                                    "contact_number": {
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "location": {
+                                        "type": "string",
+                                        "example": "Downtown"
+                                    },
+                                    "address_line_1": {
+                                        "type": "string",
+                                        "example": "123 Main St"
+                                    },
+                                    "address_line_2": {
+                                        "type": "string",
+                                        "example": "Suite 100"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "New York"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "example": "NY"
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "example": "USA"
+                                    },
+                                    "postal_code": {
+                                        "type": "string",
+                                        "example": "10001"
+                                    },
+                                    "latitude": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 40.7128
+                                    },
+                                    "longitude": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": -74.006
+                                    },
+                                    "owner_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "owner_name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Best pizza in town"
+                                    },
+                                    "profile": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "is_active": {
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Restaurant updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Restaurant updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized. Admin access required."
+                    },
+                    "404": {
+                        "description": "Restaurant not found"
+                    },
+                    "422": {
+                        "description": "Validation failed"
+                    },
+                    "500": {
+                        "description": "Failed to update restaurant"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Restaurants"
+                ],
+                "summary": "Delete a restaurant (Admin only)",
+                "description": "Remove a restaurant entry for admin users",
+                "operationId": "c2ccbeeec1c3c83cb35060d110fa7953",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the restaurant",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Restaurant deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Restaurant deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized. Admin access required."
+                    },
+                    "404": {
+                        "description": "Restaurant not found"
+                    },
+                    "500": {
+                        "description": "Failed to delete restaurant"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/restaurants/my-restaurant": {
+            "get": {
+                "tags": [
+                    "Restaurants"
+                ],
+                "summary": "Get authenticated user's restaurant",
+                "description": "Retrieve the restaurant owned by the authenticated user",
+                "operationId": "5048027106721831e74b4e3f6599500b",
+                "responses": {
+                    "200": {
+                        "description": "Restaurant retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Restaurant retrieved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Restaurant not found"
+                    },
+                    "500": {
+                        "description": "Failed to retrieve restaurant"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Restaurants"
+                ],
+                "summary": "Create or update authenticated user's restaurant",
+                "description": "Create or update the restaurant owned by the authenticated user",
+                "operationId": "3769bc84027c768f25780612ea4d5d94",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Pizza Palace"
+                                    },
+                                    "contact_number": {
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "location": {
+                                        "type": "string",
+                                        "example": "Downtown"
+                                    },
+                                    "address_line_1": {
+                                        "type": "string",
+                                        "example": "123 Main St"
+                                    },
+                                    "address_line_2": {
+                                        "type": "string",
+                                        "example": "Suite 100"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "New York"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "example": "NY"
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "example": "USA"
+                                    },
+                                    "postal_code": {
+                                        "type": "string",
+                                        "example": "10001"
+                                    },
+                                    "latitude": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 40.7128
+                                    },
+                                    "longitude": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": -74.006
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Best pizza in town"
+                                    },
+                                    "profile": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Restaurant updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Restaurant updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Restaurant created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Restaurant created successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed"
+                    },
+                    "500": {
+                        "description": "Failed to save restaurant"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/restaurants/{id}/toggle-status": {
+            "post": {
+                "tags": [
+                    "Restaurants"
+                ],
+                "summary": "Toggle restaurant status (Admin only)",
+                "description": "Toggle the active/inactive status of a restaurant for admin users",
+                "operationId": "9ce5bc3375fb0c428bd3f997c5f86532",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the restaurant",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Restaurant status toggled successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Restaurant status updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized. Admin access required."
+                    },
+                    "404": {
+                        "description": "Restaurant not found"
+                    },
+                    "500": {
+                        "description": "Failed to toggle restaurant status"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/restaurants/my-restaurant/toggle-status": {
+            "post": {
+                "tags": [
+                    "Restaurants"
+                ],
+                "summary": "Toggle authenticated user's restaurant status",
+                "description": "Toggle the active/inactive status of the authenticated user's restaurant",
+                "operationId": "6afe792aad783383bba3e6e40507bfa8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "closure_reason": {
+                                        "type": "string",
+                                        "example": "Lunch break"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Restaurant status toggled successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Restaurant status updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Restaurant not found"
+                    },
+                    "500": {
+                        "description": "Failed to toggle restaurant status"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/restaurant-users": {
+            "get": {
+                "tags": [
+                    "Restaurant Users"
+                ],
+                "summary": "List restaurant users",
+                "description": "Get a paginated list of restaurant users with optional filtering and search",
+                "operationId": "9c407e3c180c1afa717e31e56570f48f",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filter by status (waiting, dine-in, all)",
+                        "schema": {
+                            "type": "string",
+                            "example": "waiting"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search by username or mobile number",
+                        "schema": {
+                            "type": "string",
+                            "example": "john"
+                        }
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "description": "Field to sort by",
+                        "schema": {
+                            "type": "string",
+                            "example": "created_at"
+                        }
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "Sort order (asc or desc)",
+                        "schema": {
+                            "type": "string",
+                            "example": "desc"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "schema": {
+                            "type": "integer",
+                            "example": 20
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 20
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 100
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Restaurant users retrieved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to retrieve restaurant users"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Restaurant Users"
+                ],
+                "summary": "Create a new restaurant user",
+                "description": "Create a new restaurant user entry",
+                "operationId": "b3f02277daa5072250bff0f1f67f9a1b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "username",
+                                    "mobile_number"
+                                ],
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "mobile_number": {
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "total_users_count": {
+                                        "type": "integer",
+                                        "example": 4
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Restaurant user created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Restaurant user created successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "No restaurant found for this user"
+                    },
+                    "500": {
+                        "description": "Failed to create restaurant user"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/restaurant-users/{restaurantUser}": {
+            "get": {
+                "tags": [
+                    "Restaurant Users"
+                ],
+                "summary": "Get a specific restaurant user",
+                "description": "Retrieve details of a specific restaurant user by ID",
+                "operationId": "7c046b75d8e54649e1c2addb97f9cd13",
+                "parameters": [
+                    {
+                        "name": "restaurantUser",
+                        "in": "path",
+                        "description": "ID of the restaurant user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Restaurant user retrieved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to retrieve restaurant user"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Restaurant Users"
+                ],
+                "summary": "Update a restaurant user",
+                "description": "Update an existing restaurant user entry",
+                "operationId": "2f57977fc494a761b06ad54dc407e933",
+                "parameters": [
+                    {
+                        "name": "restaurantUser",
+                        "in": "path",
+                        "description": "ID of the restaurant user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "mobile_number": {
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "total_users_count": {
+                                        "type": "integer",
+                                        "example": 4
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "waiting"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Restaurant user updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Restaurant user updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to update restaurant user"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Restaurant Users"
+                ],
+                "summary": "Delete a restaurant user",
+                "description": "Remove a restaurant user entry",
+                "operationId": "f0ef9f20c4023d9b311337544ddb41b8",
+                "parameters": [
+                    {
+                        "name": "restaurantUser",
+                        "in": "path",
+                        "description": "ID of the restaurant user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Restaurant user deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Restaurant user deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to delete restaurant user"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/restaurant-users/search/by-phone/{phone}": {
+            "get": {
+                "tags": [
+                    "Restaurant Users"
+                ],
+                "summary": "Search users by phone number",
+                "description": "Search for restaurant users by phone number for auto-fill functionality",
+                "operationId": "3450f882b4242488e154ddcace810e75",
+                "parameters": [
+                    {
+                        "name": "phone",
+                        "in": "path",
+                        "description": "Phone number to search for",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "1234567890"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "username": {
+                                                    "type": "string",
+                                                    "example": "John Doe"
+                                                },
+                                                "phone_number": {
+                                                    "type": "string",
+                                                    "example": "1234567890"
+                                                },
+                                                "found": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2023-01-01 12:00:00"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User found with this phone number"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to retrieve restaurant users"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/restaurant-users/{restaurantUser}/mark-dine-in": {
+            "post": {
+                "tags": [
+                    "Restaurant Users"
+                ],
+                "summary": "Mark user as dine-in",
+                "description": "Update restaurant user status to dine-in",
+                "operationId": "011926a0cab0c910c91cda38d828cae9",
+                "parameters": [
+                    {
+                        "name": "restaurantUser",
+                        "in": "path",
+                        "description": "ID of the restaurant user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User marked as dine-in successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User marked as dine-in successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to mark user as dine-in"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/restaurant-users/{restaurantUser}/mark-waiting": {
+            "post": {
+                "tags": [
+                    "Restaurant Users"
+                ],
+                "summary": "Mark user as waiting",
+                "description": "Update restaurant user status to waiting (undo dine-in)",
+                "operationId": "61c403d3679a6f8808bffbbea04fddf9",
+                "parameters": [
+                    {
+                        "name": "restaurantUser",
+                        "in": "path",
+                        "description": "ID of the restaurant user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User marked as waiting successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User marked as waiting successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to mark user as waiting"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/restaurant-users/waiting-count": {
+            "get": {
+                "tags": [
+                    "Restaurant Users"
+                ],
+                "summary": "Get waiting count",
+                "description": "Get the current waiting count for the authenticated user's restaurant",
+                "operationId": "c7fdfe4236e5201214e4a70f7342fe2e",
+                "responses": {
+                    "200": {
+                        "description": "Waiting count retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "waiting_count": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Waiting count retrieved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to get waiting count"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/settings": {
+            "get": {
+                "tags": [
+                    "Settings"
+                ],
+                "summary": "Get application settings",
+                "description": "Retrieve application settings (Admin only)",
+                "operationId": "5b1ccf30f607b331f04ca7288fdba491",
+                "responses": {
+                    "200": {
+                        "description": "Settings retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Settings retrieved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized. Admin access required."
+                    },
+                    "500": {
+                        "description": "Failed to retrieve settings"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Settings"
+                ],
+                "summary": "Update application settings",
+                "description": "Update application settings (Admin only)",
+                "operationId": "0a9a9ef8995d7ad9530b4f08281bad00",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "application_name": {
+                                        "type": "string",
+                                        "example": "Waiting List App"
+                                    },
+                                    "app_version": {
+                                        "type": "string",
+                                        "example": "1.0.0"
+                                    },
+                                    "logo": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "favicon": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "app_logo": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Settings updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Settings updated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized. Admin access required."
+                    },
+                    "422": {
+                        "description": "Validation failed"
+                    },
+                    "500": {
+                        "description": "Failed to update settings"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/settings/public": {
+            "get": {
+                "tags": [
+                    "Settings"
+                ],
+                "summary": "Get public settings",
+                "description": "Retrieve public application settings (no authentication required)",
+                "operationId": "f5492351bb2a69ad99305b9b2f7b6ca9",
+                "responses": {
+                    "200": {
+                        "description": "Public settings retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "application_name": {
+                                                    "type": "string",
+                                                    "example": "Waiting List App"
+                                                },
+                                                "app_version": {
+                                                    "type": "string",
+                                                    "example": "1.0.0"
+                                                },
+                                                "logo": {
+                                                    "type": "string",
+                                                    "example": "http://example.com/storage/settings/logo.png"
+                                                },
+                                                "favicon": {
+                                                    "type": "string",
+                                                    "example": "http://example.com/storage/settings/favicon.ico"
+                                                },
+                                                "app_logo": {
+                                                    "type": "string",
+                                                    "example": "http://example.com/storage/settings/app_logo.png"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Public settings retrieved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to retrieve public settings"
+                    }
+                }
+            }
+        },
+        "/api/subscription-plans": {
+            "get": {
+                "tags": [
+                    "Subscription Plans"
+                ],
+                "summary": "List subscription plans",
+                "description": "Get all subscription plans (enabled plans for users, all plans for admins)",
+                "operationId": "d1c39c9bb08f6e0c30d882a3a9e4c36f",
+                "responses": {
+                    "200": {
+                        "description": "Subscription plans retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to fetch subscription plans"
+                    }
+                }
+            }
+        },
+        "/api/admin/subscription-plans": {
+            "post": {
+                "tags": [
+                    "Subscription Plans"
+                ],
+                "summary": "Create subscription plan",
+                "description": "Create a new subscription plan (Admin only)",
+                "operationId": "5468bde07bc20c18f2d721f46d66a223",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "duration_days",
+                                    "price"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Basic Plan"
+                                    },
+                                    "duration_days": {
+                                        "type": "integer",
+                                        "example": 30
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "example": 9.99
+                                    },
+                                    "is_enabled": {
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Basic subscription plan"
+                                    },
+                                    "features": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "example": "Up to 100 users"
+                                        }
+                                    },
+                                    "sort_order": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Subscription plan created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Subscription plan created successfully."
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized. Admin access required."
+                    },
+                    "422": {
+                        "description": "Validation failed"
+                    },
+                    "500": {
+                        "description": "Failed to create subscription plan"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/subscription-plans/{subscriptionPlan}": {
+            "get": {
+                "tags": [
+                    "Subscription Plans"
+                ],
+                "summary": "Get specific subscription plan",
+                "description": "Get details of a specific subscription plan",
+                "operationId": "1eefbf69a053d6215049b4171a29c731",
+                "parameters": [
+                    {
+                        "name": "subscriptionPlan",
+                        "in": "path",
+                        "description": "ID of the subscription plan",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Subscription plan retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Subscription plan not found"
+                    },
+                    "500": {
+                        "description": "Failed to fetch subscription plan"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Subscription Plans"
+                ],
+                "summary": "Update subscription plan",
+                "description": "Update an existing subscription plan (Admin only)",
+                "operationId": "a8a8aabf11c741640ab249ad52711c20",
+                "parameters": [
+                    {
+                        "name": "subscriptionPlan",
+                        "in": "path",
+                        "description": "ID of the subscription plan",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Basic Plan"
+                                    },
+                                    "duration_days": {
+                                        "type": "integer",
+                                        "example": 30
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "example": 9.99
+                                    },
+                                    "is_enabled": {
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Basic subscription plan"
+                                    },
+                                    "features": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "example": "Up to 100 users"
+                                        }
+                                    },
+                                    "sort_order": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Subscription plan updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Subscription plan updated successfully."
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized. Admin access required."
+                    },
+                    "422": {
+                        "description": "Validation failed"
+                    },
+                    "500": {
+                        "description": "Failed to update subscription plan"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Subscription Plans"
+                ],
+                "summary": "Delete subscription plan",
+                "description": "Delete a subscription plan (Admin only)",
+                "operationId": "c9fb93f97d0d65b8f63a1305788969a5",
+                "parameters": [
+                    {
+                        "name": "subscriptionPlan",
+                        "in": "path",
+                        "description": "ID of the subscription plan",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Subscription plan deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Subscription plan deleted successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized. Admin access required."
+                    },
+                    "422": {
+                        "description": "Cannot delete plan with active subscriptions"
+                    },
+                    "500": {
+                        "description": "Failed to delete subscription plan"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/transactions": {
+            "get": {
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "List transactions",
+                "description": "Get a paginated list of transactions (Admin only)",
+                "operationId": "510ed7dedf4da42c4f986b4dcc639473",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "schema": {
+                            "type": "integer",
+                            "example": 15
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filter by transaction status",
+                        "schema": {
+                            "type": "string",
+                            "example": "completed"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search by restaurant name, plan name, or transaction ID",
+                        "schema": {
+                            "type": "string",
+                            "example": "order_123456"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Transactions retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "pagination": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized. Admin access required."
+                    },
+                    "500": {
+                        "description": "Failed to fetch transactions"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/transactions/{transaction}": {
+            "get": {
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Get specific transaction",
+                "description": "Get details of a specific transaction (Admin only)",
+                "operationId": "e503213cd3e71cf8a8eac41a44a90e07",
+                "parameters": [
+                    {
+                        "name": "transaction",
+                        "in": "path",
+                        "description": "ID of the transaction",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Transaction retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized. Admin access required."
+                    },
+                    "500": {
+                        "description": "Failed to fetch transaction"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/transactions/stats": {
+            "get": {
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Get transaction statistics",
+                "description": "Get transaction statistics (Admin only)",
+                "operationId": "bd4031f3ca66510bd15e945174cba9dd",
+                "responses": {
+                    "200": {
+                        "description": "Transaction statistics retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "total_transactions": {
+                                                    "type": "integer",
+                                                    "example": 1250
+                                                },
+                                                "completed_transactions": {
+                                                    "type": "integer",
+                                                    "example": 1100
+                                                },
+                                                "pending_transactions": {
+                                                    "type": "integer",
+                                                    "example": 50
+                                                },
+                                                "failed_transactions": {
+                                                    "type": "integer",
+                                                    "example": 100
+                                                },
+                                                "total_revenue": {
+                                                    "type": "number",
+                                                    "example": 12500
+                                                },
+                                                "today_revenue": {
+                                                    "type": "number",
+                                                    "example": 250
+                                                },
+                                                "this_month_revenue": {
+                                                    "type": "number",
+                                                    "example": 5000
+                                                },
+                                                "total_transactions_growth": {
+                                                    "type": "number",
+                                                    "example": 15.5
+                                                },
+                                                "completed_transactions_growth": {
+                                                    "type": "number",
+                                                    "example": 12.3
+                                                },
+                                                "revenue_growth": {
+                                                    "type": "number",
+                                                    "example": 18.7
+                                                },
+                                                "avg_transaction": {
+                                                    "type": "number",
+                                                    "example": 11.36
+                                                },
+                                                "avg_transaction_growth": {
+                                                    "type": "number",
+                                                    "example": 8.2
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized. Admin access required."
+                    },
+                    "500": {
+                        "description": "Failed to fetch transaction statistics"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/subscriptions": {
+            "get": {
+                "tags": [
+                    "Subscriptions"
+                ],
+                "summary": "List user's subscriptions",
+                "description": "Get all subscription history for the authenticated user",
+                "operationId": "70c65ce6fd3166ae040b8944e0cee3f3",
+                "responses": {
+                    "200": {
+                        "description": "Subscriptions retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to fetch subscriptions"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/subscriptions/purchase": {
+            "post": {
+                "tags": [
+                    "Subscriptions"
+                ],
+                "summary": "Purchase a subscription",
+                "description": "Purchase a subscription plan for the authenticated user",
+                "operationId": "4c18612f5333e7ac7df32daaf8a412e2",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "subscription_plan_id",
+                                    "transaction_id"
+                                ],
+                                "properties": {
+                                    "subscription_plan_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "payment_method": {
+                                        "type": "string",
+                                        "example": "razorpay"
+                                    },
+                                    "transaction_id": {
+                                        "type": "string",
+                                        "example": "order_123456"
+                                    },
+                                    "payment_details": {
+                                        "properties": {
+                                            "razorpay_payment_id": {
+                                                "type": "string",
+                                                "example": "pay_123456"
+                                            },
+                                            "razorpay_order_id": {
+                                                "type": "string",
+                                                "example": "order_123456"
+                                            },
+                                            "razorpay_signature": {
+                                                "type": "string",
+                                                "example": "signature123"
+                                            },
+                                            "amount_paid": {
+                                                "type": "number",
+                                                "example": 999
+                                            },
+                                            "currency": {
+                                                "type": "string",
+                                                "example": "INR"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Subscription purchased successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Subscription purchased successfully!"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "transaction": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed or subscription plan not available"
+                    },
+                    "500": {
+                        "description": "Failed to purchase subscription"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/subscriptions/status": {
+            "get": {
+                "tags": [
+                    "Subscriptions"
+                ],
+                "summary": "Get subscription status",
+                "description": "Get the current subscription status for the authenticated user",
+                "operationId": "4e989f670f7798ed75221b396a49e37c",
+                "responses": {
+                    "200": {
+                        "description": "Subscription status retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "has_premium_access": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "active_subscription": {
+                                                    "type": "object"
+                                                },
+                                                "subscription_required": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to fetch subscription status"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/subscriptions/cancel": {
+            "post": {
+                "tags": [
+                    "Subscriptions"
+                ],
+                "summary": "Cancel subscription",
+                "description": "Cancel the active subscription for the authenticated user",
+                "operationId": "ab837a95b3ce69c2845a1b12f193bb8e",
+                "responses": {
+                    "200": {
+                        "description": "Subscription cancelled successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Subscription cancelled successfully."
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No active subscription found"
+                    },
+                    "500": {
+                        "description": "Failed to cancel subscription"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/subscriptions/{userSubscription}": {
+            "get": {
+                "tags": [
+                    "Subscriptions"
+                ],
+                "summary": "Get specific subscription",
+                "description": "Get details of a specific subscription for the authenticated user",
+                "operationId": "a0eb1019c4d2281dd5902aee6d8128cc",
+                "parameters": [
+                    {
+                        "name": "userSubscription",
+                        "in": "path",
+                        "description": "ID of the subscription",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Subscription retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Failed to retrieve subscription"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/subscriptions/create-razorpay-order": {
+            "post": {
+                "tags": [
+                    "Subscriptions"
+                ],
+                "summary": "Create Razorpay order",
+                "description": "Create a Razorpay order for subscription purchase",
+                "operationId": "202cfda49302217bcdd34b80a446416d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "subscription_plan_id"
+                                ],
+                                "properties": {
+                                    "subscription_plan_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Razorpay order created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "order_id": {
+                                                    "type": "string",
+                                                    "example": "order_123456"
+                                                },
+                                                "amount": {
+                                                    "type": "integer",
+                                                    "example": 999
+                                                },
+                                                "currency": {
+                                                    "type": "string",
+                                                    "example": "INR"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed"
+                    },
+                    "500": {
+                        "description": "Failed to create Razorpay order"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user-transactions": {
+            "get": {
+                "tags": [
+                    "Subscriptions"
+                ],
+                "summary": "Get user transactions",
+                "description": "Get all transactions for the authenticated user",
+                "operationId": "171aa1e12b757c875fcfdff25590f6de",
+                "responses": {
+                    "200": {
+                        "description": "Transactions retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to fetch transactions"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Admin",
+            "description": "API Endpoints for Admin Management"
+        },
+        {
+            "name": "Authentication",
+            "description": "API Endpoints for User Authentication"
+        },
+        {
+            "name": "Restaurants",
+            "description": "API Endpoints for Restaurant Management"
+        },
+        {
+            "name": "Restaurant Users",
+            "description": "API Endpoints for Restaurant User Management"
+        },
+        {
+            "name": "Settings",
+            "description": "API Endpoints for Application Settings Management"
+        },
+        {
+            "name": "Subscription Plans",
+            "description": "API Endpoints for Subscription Plan Management"
+        },
+        {
+            "name": "Transactions",
+            "description": "API Endpoints for Transaction Management"
+        },
+        {
+            "name": "Subscriptions",
+            "description": "API Endpoints for Subscription Management"
+        }
+    ]
+}
