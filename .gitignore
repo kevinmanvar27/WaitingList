@@ -1,0 +1,105 @@
+# Created by https://www.toptal.com/developers/gitignore/api/laravel
+# Edit at https://www.toptal.com/developers/gitignore?templates=laravel
+
+# Laravel #
+/vendor/
+/node_modules/
+npm-debug.log*
+yarn-error.log*
+yarn.lock
+.env
+.env.backup
+.env.save
+.env.local
+.env.*.local
+.phpunit.result.cache
+.php_cs.cache
+.php_cs.dist
+Homestead.json
+Homestead.yaml
+npm-debug.log*
+yarn-error.log*
+.env.testing
+.env.staging
+.env.production
+/storage/*.key
+/storage/logs/*
+!/storage/logs/.gitkeep
+/storage/framework/cache/data/*
+!/storage/framework/cache/data/.gitkeep
+/storage/framework/sessions/*
+!/storage/framework/sessions/.gitkeep
+/storage/framework/views/*
+!/storage/framework/views/.gitkeep
+/storage/app/backups/*
+/bootstrap/cache/*
+!/bootstrap/cache/.gitkeep
+/public/hot
+/public/storage
+!.gitkeep
+*.env.*
+!.env.example
+*.log
+*.lock
+*.tmp
+*.tmp.*
+~*
+
+# IDE #
+.idea/
+.vscode/
+*.sw[op]
+*.swo
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Composer #
+composer.phar
+composer.lock (uncomment if you don't want to commit composer.lock)
+/vendor/
+
+# NPM #
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Testing #
+.clover.xml
+.php_cs
+.php_cs.cache
+.phpunit.result.cache
+coverage/
+htmlcov/
+.nox/
+
+# Vite #
+.vite/
+/public/build/
+/public/hot
+
+# Temporary files #
+*.tmp
+*.temp
+*~
+
+# OS generated files #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Zip files (if you're creating zip distributions) #
+*.zip
+*.tar.gz
+
+# Specific to your project #
+create_zip.php
+test_page.php
+waitinglist/
