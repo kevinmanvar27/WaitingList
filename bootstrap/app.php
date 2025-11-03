@@ -18,7 +18,6 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->alias([
-            'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
             'premium' => \App\Http\Middleware\CheckPremiumAccess::class,
         ]);
 
@@ -27,7 +26,7 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($request->expectsJson()) {
                 return null; // Return null to prevent redirect and return 401 instead
             }
-            return route('login');
+            return route('admin.login');
         });
     })
     ->withExceptions(function (Exceptions $exceptions): void {
