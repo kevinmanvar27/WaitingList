@@ -875,6 +875,126 @@
                 ]
             }
         },
+        "/api/auth/change-pin": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Change user PIN",
+                "description": "Change the PIN for the authenticated user with confirmation",
+                "operationId": "changePin",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "current_pin",
+                                    "new_pin",
+                                    "confirm_pin"
+                                ],
+                                "properties": {
+                                    "current_pin": {
+                                        "type": "string",
+                                        "maxLength": 6,
+                                        "minLength": 4,
+                                        "pattern": "^[0-9]{4,6}$",
+                                        "example": "1234"
+                                    },
+                                    "new_pin": {
+                                        "type": "string",
+                                        "maxLength": 6,
+                                        "minLength": 4,
+                                        "pattern": "^[0-9]{4,6}$",
+                                        "example": "5678"
+                                    },
+                                    "confirm_pin": {
+                                        "type": "string",
+                                        "maxLength": 6,
+                                        "minLength": 4,
+                                        "pattern": "^[0-9]{4,6}$",
+                                        "example": "5678"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "PIN changed successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "PIN changed successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "John Doe"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "john@example.com"
+                                                        },
+                                                        "profile_picture": {
+                                                            "type": "string",
+                                                            "example": "https://..."
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2023-01-01T00:00:00.000000Z"
+                                                        },
+                                                        "has_pin": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        },
+                                                        "is_admin": {
+                                                            "type": "boolean",
+                                                            "example": false
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed or incorrect current PIN"
+                    },
+                    "500": {
+                        "description": "Failed to change PIN"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/admin/restaurants": {
             "get": {
                 "tags": [

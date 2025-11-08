@@ -23,6 +23,7 @@ Route::prefix('auth')->middleware('throttle:auth')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::post('/set-pin', [AuthController::class, 'setPin']);
         Route::put('/profile', [AuthController::class, 'updateProfile']);
+        Route::post('/change-pin', [AuthController::class, 'changePin']);
     });
 });
 

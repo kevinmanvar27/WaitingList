@@ -368,4 +368,78 @@ class AuthController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Change user PIN
+     */
+    public function changePin(Request $request): JsonResponse
+    {
+        try {
+            $request->validate([
+                'current_pin' => 'required|string|min:4|max:6|regex:/^[0-9]{4,6}$/',
+                'new_pin' => 'required|string|min:4|max:6|regex:/^[0-9]{4,6}$/|different:current_pin',
+                'confirm_pin' => 'required|string|min:4|max:6|regex:/^[0-9]{4,6}$/|same:new_pin',
+            ]);
+
+            $user = $request->user();
+
+            // Check if user has a PIN set
+            if (!$user->pin) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No PIN is currently set for this account. Please set a PIN first.',
+                ], 422);
+            }
+
+            // Verify current PIN
+            if (!Hash::check($request->current_pin, $user->pin)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Current PIN is incorrect.',
+                ], 422);
+            }
+
+            // Update to new PIN
+            $user->update([
+                'pin' => Hash::make($request->new_pin),
+                'pin_set_at' => now(),
+            ]);
+
+            // Refresh user data to get updated fields
+            $user->refresh();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'PIN changed successfully',
+                'data' => [
+                    'user' => [
+                        'id' => $user->id,
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'profile_picture' => $user->profile_picture,
+                        'created_at' => $user->created_at,
+                        'has_pin' => !empty($user->pin),
+                        'is_admin' => $user->is_admin,
+                    ]
+                ]
+            ]);
+
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            \Log::error('Change PIN error: ' . $e->getMessage(), [
+                'user_id' => $request->user()?->id,
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to change PIN: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
 }
