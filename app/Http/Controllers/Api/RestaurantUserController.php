@@ -367,13 +367,4 @@ class RestaurantUserController extends Controller
         }
     }
 
-    public function specificRestaurant(Request $request)
-    {
-        $restaurant = \App\Models\Restaurant::where('id', $request->user()->id)->first();
-        return response()->json([
-            'success' => true,
-            'data' => $restaurant,
-            'message' => 'Restaurant retrieved successfully',
-        ]);
-    }
 }
