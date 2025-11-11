@@ -366,5 +366,4 @@ class RestaurantUserController extends Controller
             \Log::error('Failed to update restaurant waiting count: ' . $e->getMessage());
         }
     }
-
 }

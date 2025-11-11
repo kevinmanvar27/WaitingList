@@ -568,4 +568,41 @@ class RestaurantController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Get waiting users for a specific restaurant (Public endpoint)
+     */
+    public function getWaitingUsers(Request $request, $restaurantId): JsonResponse
+    {
+        try {
+            // Find the restaurant by ID
+            $restaurant = Restaurant::find($restaurantId);
+
+            // Check if restaurant exists
+            if (!$restaurant) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Restaurant not found.',
+                ], 404);
+            }
+
+            // Get waiting users for this restaurant
+            $waitingUsers = \App\Models\RestaurantUser::where('restaurant_id', $restaurantId)
+                ->waiting()
+                ->orderBy('created_at', 'asc')
+                ->get();
+
+            return response()->json([
+                'success' => true,
+                'data' => $waitingUsers,
+                'message' => 'Waiting users retrieved successfully',
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve waiting users: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
 }

@@ -36,6 +36,7 @@ Route::get('/test', function () {
     ]);
 });
 Route::get('/restaurants/public', [RestaurantController::class, 'publicList']);
+Route::get('/restaurants/{restaurantId}/waiting-users', [RestaurantController::class, 'getWaitingUsers']);
 Route::get('/settings/public', [SettingsController::class, 'public']);
 Route::get('/pages/{slug}', [\App\Http\Controllers\Api\PageController::class, 'publicShow']);
 
@@ -47,10 +48,7 @@ Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
     // Premium features - require subscription
     Route::middleware(['premium'])->group(function () {
         Route::apiResource('restaurant-users', RestaurantUserController::class);
-        
-        // get specific restaurant user
-        Route::get('restaurant-users/{restaurantUser}', [RestaurantUserController::class, 'show']);
-        
+       
 
         // Auto-fill functionality
         Route::get('/restaurant-users/search/by-phone/{phone}', [RestaurantUserController::class, 'searchByPhone']);
