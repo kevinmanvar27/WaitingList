@@ -47,6 +47,7 @@ Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
     // Premium features - require subscription
     Route::middleware(['premium'])->group(function () {
         Route::apiResource('restaurant-users', RestaurantUserController::class);
+        Route::get('restaurant-users/{restaurantUser}', [RestaurantUserController::class, 'specificRestaurant']);
 
         // Auto-fill functionality
         Route::get('/restaurant-users/search/by-phone/{phone}', [RestaurantUserController::class, 'searchByPhone']);

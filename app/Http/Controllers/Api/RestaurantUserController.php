@@ -366,4 +366,14 @@ class RestaurantUserController extends Controller
             \Log::error('Failed to update restaurant waiting count: ' . $e->getMessage());
         }
     }
+
+    public function specificRestaurant(Request $request)
+    {
+        $restaurant = \App\Models\Restaurant::where('id', $request->user()->id)->first();
+        return response()->json([
+            'success' => true,
+            'data' => $restaurant,
+            'message' => 'Restaurant retrieved successfully',
+        ]);
+    }
 }
