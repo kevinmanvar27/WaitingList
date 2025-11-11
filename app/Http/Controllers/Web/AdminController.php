@@ -824,7 +824,7 @@ class AdminController extends Controller
         }
 
         $request->validate([
-            'status' => 'required|in:open,closed',
+            'status' => 'required|in:1,0',
         ]);
 
         try {

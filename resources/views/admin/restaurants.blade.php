@@ -82,11 +82,11 @@
                             </td>
                             <td class="px-2 py-2">
                                 <div class="flex items-center space-x-2">
-                                    <button type="button" onclick="toggleOperationalStatus(this, {{ $restaurant->id }})" class="relative inline-flex h-6 w-20 items-center rounded-full transition-colors duration-200 focus:outline-none {{ $restaurant->operational_status === 'open' ? 'bg-green-500' : 'bg-red-500' }}" aria-pressed="{{ $restaurant->operational_status === 'open' ? 'true' : 'false' }}" id="toggle-operational-btn-{{ $restaurant->id }}">
+                                    <button type="button" onclick="toggleOperationalStatus(this, {{ $restaurant->id }})" class="relative inline-flex h-6 w-20 items-center rounded-full transition-colors duration-200 focus:outline-none {{ $restaurant->operational_status === '1' ? 'bg-green-500' : 'bg-red-500' }}" aria-pressed="{{ $restaurant->operational_status === '1' ? 'true' : 'false' }}" id="toggle-operational-btn-{{ $restaurant->id }}">
                                         <span class="sr-only">Toggle Enabled</span>
-                                        <span class="inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform duration-200 {{ $restaurant->operational_status === 'open' ? 'translate-x-12' : 'translate-x-1' }}"></span>
-                                        <span class="absolute left-2 text-xs font-semibold text-white">{{ $restaurant->operational_status === 'open' ? 'Open' : '' }}</span>
-                                        <span class="absolute right-2 text-xs font-semibold text-white">{{ $restaurant->operational_status === 'closed' ? 'Closed' : '' }}</span>
+                                        <span class="inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform duration-200 {{ $restaurant->operational_status === '1' ? 'translate-x-12' : 'translate-x-1' }}"></span>
+                                        <span class="absolute left-2 text-xs font-semibold text-white">{{ $restaurant->operational_status === '1' ? 'Open' : '' }}</span>
+                                        <span class="absolute right-2 text-xs font-semibold text-white">{{ $restaurant->operational_status === '0' ? 'Closed' : '' }}</span>
                                     </button>
                                 </div>
                             </td>
@@ -221,7 +221,7 @@ function updateToggleUI(btn, id, status) {
 
 function toggleOperationalStatus(btn, id) {
     const isOpen = btn.getAttribute('aria-pressed') === 'true';
-    const newStatus = isOpen ? 'closed' : 'open';
+    const newStatus = isOpen ? '0' : '1';
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     updateOperationalToggleUI(btn, id, newStatus);
@@ -244,19 +244,19 @@ function toggleOperationalStatus(btn, id) {
     })
     .then(data => {
         if (!data.success) {
-            updateOperationalToggleUI(btn, id, isOpen ? 'open' : 'closed');
+            updateOperationalToggleUI(btn, id, isOpen ? '1' : '0');
             alert('Error: ' + (data.message || 'Could not update status.'));
         }
     })
     .catch(error => {
-        updateOperationalToggleUI(btn, id, isOpen ? 'open' : 'closed');
+        updateOperationalToggleUI(btn, id, isOpen ? '1' : '0');
         console.error('AJAX error:', error);
         alert('An unexpected error occurred. Please try again.');
     });
 }
 
 function updateOperationalToggleUI(btn, id, status) {
-    const isOpen = status === 'open';
+    const isOpen = status === '1';
     const knob = btn.querySelector('span:not(.sr-only)');
     const openText = btn.querySelector('.left-2');
     const closedText = btn.querySelector('.right-2');

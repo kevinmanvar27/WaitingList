@@ -552,7 +552,7 @@ class RestaurantController extends Controller
                 ], 404);
             }
 
-            $restaurant->update(['is_active' => !$restaurant->is_active]);
+            $restaurant->update(['operational_status' => !$restaurant->operational_status]);
             $restaurant->load('owner');
 
             return response()->json([
